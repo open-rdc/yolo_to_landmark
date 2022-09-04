@@ -5,11 +5,11 @@ import rospy
 import rosparam
 from yolov5_pytorch_ros.msg import BoundingBoxes
 import math
-from emcl import DetectObjects
+from emcl.msg import DetectObjects
 
 class yolo_to_landmark:
     def __init__(self):
-        self.width = int(rosparam.get_param("/yolo_to_landmark/width", "1280"))
+        self.width = int(rospy.get_param("/yolo_to_landmark/width", "1280"))
         rospy.Subscriber("/detected_objects_in_image", BoundingBoxes, self.cb_yolo)
         self.pub = rospy.Publisher("/detectobjects", DetectObjects, queue_size=1)
 
@@ -27,3 +27,4 @@ if __name__ == '__main__':
     rospy.init_node('yolo_to_landmark')
     yolo_to_landmark()
     rospy.spin()
+
